@@ -50,7 +50,7 @@ int first(Coda c){
     if (c.numeroElementi == 0)
         return 0;
 
-    return c.arr[c.numeroElementi-1];
+    return c.arr[0];
 }
 
 void enqueue(Coda *c, int e){
