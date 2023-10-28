@@ -40,10 +40,10 @@ int main(){
 int isEmpty(Coda c){
     for (int i = 0; i < c.numeroElementi; i++) {
         if (c.arr[i]){
-            return 1;
+            return 0;
         }
     }
-    return 0;
+    return 1;
 }
 
 int first(Coda c){
