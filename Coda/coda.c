@@ -1,5 +1,51 @@
 #include <stdio.h>
+#define MAX_ELEMENTI 10
+
+struct strutturaCoda{
+    int arr[MAX_ELEMENTI];
+    int numeroElementi;
+};
+
+typedef struct strutturaCoda Coda;
+
+void stampaCoda(Coda c);
+int isEmpty(Coda);
+void enqueue(Coda *, int e);
+int dequeue(Coda);
 
 int main(){
+    Coda coda;
+    coda.numeroElementi = 0;
 
+    enqueue(&coda,10);
+    enqueue(&coda,2);
+    enqueue(&coda,4);
+    enqueue(&coda,5);
+    enqueue(&coda,6);
+    enqueue(&coda,8);
+
+    stampaCoda(coda);
+}
+
+int isEmpty(Coda c){
+    for (int i = 0; i < c.numeroElementi; i++) {
+        if (c.arr[i]){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+void enqueue(Coda *c, int e){
+    if(c->numeroElementi >= MAX_ELEMENTI)
+        return;
+
+    c->arr[c->numeroElementi] = e;
+    c->numeroElementi++;
+}
+
+void stampaCoda(Coda c) {
+    for (int i = 0; i < c.numeroElementi; i++) {
+        printf("[%d,%d]\n", i, c.arr[i]);
+    }
 }
