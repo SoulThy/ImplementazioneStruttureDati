@@ -22,6 +22,7 @@ void delete(Dizionario *, int);
 int main() {
     Dizionario dizionario;
     dizionario.quantiElementi = 0;
+    int keyToDelete = 4;
 
     insert(&dizionario, 1, "Valore1");
     insert(&dizionario, 3, "Valore3");
@@ -32,8 +33,8 @@ int main() {
 
     stampaDizionario(dizionario);
 
-    delete(&dizionario, 1);
-    printf("after delete:\n");
+    delete(&dizionario, keyToDelete);
+    printf("Eliminazione valore %d:\n", keyToDelete);
     stampaDizionario(dizionario);
 
     return 0;
