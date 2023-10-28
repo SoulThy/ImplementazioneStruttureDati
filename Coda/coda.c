@@ -11,19 +11,23 @@ typedef struct strutturaCoda Coda;
 void stampaCoda(Coda c);
 int isEmpty(Coda);
 void enqueue(Coda *, int e);
-int dequeue(Coda);
+int dequeue(Coda *);
 
 int main(){
     Coda coda;
     coda.numeroElementi = 0;
 
-    enqueue(&coda,10);
+    enqueue(&coda,1);
     enqueue(&coda,2);
+    enqueue(&coda,3);
     enqueue(&coda,4);
     enqueue(&coda,5);
     enqueue(&coda,6);
-    enqueue(&coda,8);
 
+    stampaCoda(coda);
+
+    printf("Dopo dequeue() = \n");
+    dequeue(&coda);
     stampaCoda(coda);
 }
 
@@ -44,8 +48,16 @@ void enqueue(Coda *c, int e){
     c->numeroElementi++;
 }
 
+int dequeue(Coda *c){
+    if(c->numeroElementi == 0) {
+        return 0;
+    }
+    c->numeroElementi--;
+    return c->arr[c->numeroElementi-1];
+}
+
 void stampaCoda(Coda c) {
     for (int i = 0; i < c.numeroElementi; i++) {
-        printf("[%d,%d]\n", i, c.arr[i]);
+        printf("%d° -> [%d]\n", i, c.arr[i]);
     }
 }
