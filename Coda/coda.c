@@ -47,7 +47,7 @@ int isEmpty(Coda c){
 }
 
 int first(Coda c){
-    if (c.numeroElementi == 0)
+    if (isEmpty(c))
         return 0;
 
     return c.arr[0];
@@ -62,7 +62,7 @@ void enqueue(Coda *c, int e){
 }
 
 int dequeue(Coda *c){
-    if (c->numeroElementi == 0)
+    if (isEmpty(*c))
         return 0;
 
     int elementoRimosso = c->arr[0];
