@@ -29,8 +29,10 @@ int main() {
     insert(&dizionario, 4, "Valore4");
     insert(&dizionario, 6, "Valore6");
 
-
     stampaDizionario(dizionario);
+
+    search(dizionario, 7);
+
     return 0;
 }
 
@@ -41,34 +43,51 @@ void stampaDizionario(Dizionario d){
 }
 
 int search(Dizionario d, int c){
-    int chiaveAlCentro = d.arrDizionario[d.quantiElementi/2].chiave;
-    if(chiaveAlCentro == c)
-        return 1;
-    else if (c > chiaveAlCentro)
-        return search();
+    int sinistra = 0;
+    int centro = 0;
+    int destra = d.quantiElementi-1;
+
+    while(sinistra <= destra){
+        centro = (sinistra + destra)/2;
+
+        int chiaveAlCentro = d.arrDizionario[centro].chiave;
+
+        if(chiaveAlCentro == c){
+            return 1;
+        } else if (c > chiaveAlCentro){
+            sinistra = centro + 1;
+        } else {
+            destra = centro - 1;
+        }
+    }
+
+    return 0;
 }
 
 void insert(Dizionario *d, int c, char *e){
 
-    if (d->quantiElementi >= MAX_ELEMENTI)
-        return;
-    if(search(*d,c))
-        return;
+    if (d->quantiElementi >= MAX_ELEMENTI || search(*d, c)) {
+        return; // Non inserire se il dizionario è pieno o l'elemento è già presente
+    }
 
     Dizionario nuovoDizionario;
-    nuovoDizionario.quantiElementi = d->quantiElementi + 1;
-    int i;
-    //Copia dei elementi prima di inserire il nuovoElemento
-    for (i = 0; i < d->quantiElementi && d->arrDizionario[i].chiave < c; i++) {
+    int i = 0;
+
+    // Copia gli elementi da d al nuovoDizionario prima di inserire il nuovo elemento
+    while (i < d->quantiElementi && d->arrDizionario[i].chiave < c) {
         nuovoDizionario.arrDizionario[i] = d->arrDizionario[i];
+        i++;
     }
-    //Inserimento nuovoElemento
+
+    // Inserisci il nuovo elemento
     nuovoDizionario.arrDizionario[i].chiave = c;
     nuovoDizionario.arrDizionario[i].elemento = e;
-    //Copia degli elementi dopo l'inserimento del nuovoElemento
+
+    // Copia gli elementi rimanenti da d al nuovoDizionario
     for (int j = i; j < d->quantiElementi; j++) {
         nuovoDizionario.arrDizionario[j + 1] = d->arrDizionario[j];
     }
 
+    nuovoDizionario.quantiElementi = d->quantiElementi + 1;
     *d = nuovoDizionario;
 }
