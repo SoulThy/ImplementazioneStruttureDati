@@ -17,6 +17,7 @@ typedef struct dizionario Dizionario;
 void stampaDizionario(Dizionario);
 int search(Dizionario, int);
 void insert(Dizionario *, int, char *);
+void delete(Dizionario *, int);
 
 int main() {
     Dizionario dizionario;
@@ -31,7 +32,9 @@ int main() {
 
     stampaDizionario(dizionario);
 
-    search(dizionario, 7);
+    delete(&dizionario, 1);
+    printf("after delete:\n");
+    stampaDizionario(dizionario);
 
     return 0;
 }
@@ -89,5 +92,23 @@ void insert(Dizionario *d, int c, char *e){
     }
 
     nuovoDizionario.quantiElementi = d->quantiElementi + 1;
+    *d = nuovoDizionario;
+}
+
+void delete(Dizionario *d, int c){
+    if (d->quantiElementi == 0 || search(*d, c) == 0) {
+        return; // Non eliminare se il dizionario è vuoto o l'elemento non e' presente
+    }
+
+    Dizionario nuovoDizionario;
+    // Copia gli elementi da d al nuovoDizionario senza l'elemento da eliminare
+    for (int i = 0, j = 0; i < d->quantiElementi; i++) {
+        if (d->arrDizionario[i].chiave != c) {
+            nuovoDizionario.arrDizionario[j] = d->arrDizionario[i];
+            j++;
+        }
+    }
+
+    nuovoDizionario.quantiElementi = d->quantiElementi - 1;
     *d = nuovoDizionario;
 }
