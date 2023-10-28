@@ -12,6 +12,7 @@ void stampaCoda(Coda c);
 int isEmpty(Coda);
 void enqueue(Coda *, int e);
 int dequeue(Coda *);
+int first(Coda);
 
 int main(){
     Coda coda;
@@ -29,6 +30,11 @@ int main(){
     printf("Dopo dequeue() = \n");
     dequeue(&coda);
     stampaCoda(coda);
+
+    printf("Dopo first() = \n");
+    printf("Il primo elemento e' [%d]\n", first(coda));
+    stampaCoda(coda);
+
 }
 
 int isEmpty(Coda c){
@@ -38,6 +44,13 @@ int isEmpty(Coda c){
         }
     }
     return 0;
+}
+
+int first(Coda c){
+    if (c.numeroElementi == 0)
+        return 0;
+
+    return c.arr[c.numeroElementi-1];
 }
 
 void enqueue(Coda *c, int e){
@@ -58,6 +71,7 @@ int dequeue(Coda *c){
 
 void stampaCoda(Coda c) {
     for (int i = 0; i < c.numeroElementi; i++) {
-        printf("%d° -> [%d]\n", i, c.arr[i]);
+        printf("[%d]", c.arr[i]);
     }
+    printf("\n");
 }
