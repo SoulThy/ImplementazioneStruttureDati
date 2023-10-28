@@ -62,11 +62,17 @@ void enqueue(Coda *c, int e){
 }
 
 int dequeue(Coda *c){
-    if(c->numeroElementi == 0) {
+    if (c->numeroElementi == 0)
         return 0;
-    }
+
+    int elementoRimosso = c->arr[0];
+
     c->numeroElementi--;
-    return c->arr[c->numeroElementi-1];
+    for (int i = 0; i < c->numeroElementi; ++i) {
+        c->arr[i] = c->arr[i+1];
+    }
+
+    return elementoRimosso;
 }
 
 void stampaCoda(Coda c) {
