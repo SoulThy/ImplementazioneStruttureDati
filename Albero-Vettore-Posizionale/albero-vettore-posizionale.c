@@ -31,7 +31,6 @@ int main() {
     printf("Il padre di [%d] e' [%d]\n", albero.arr[4], padre(albero,4));
     printf("Il padre di [%d] e' [%d]\n", albero.arr[2], padre(albero,2));
     printf("Il padre di [%d] e' [%d]\n", albero.arr[3], padre(albero,3));
-
 }
 
 void stampaAlbero(Albero a) {
@@ -40,7 +39,6 @@ void stampaAlbero(Albero a) {
     }
     printf("\n");
 }
-
 
 int numNodi(Albero a){
     return a.numeroElementi;
