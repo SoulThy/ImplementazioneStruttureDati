@@ -1,5 +1,6 @@
 // Rappresentazione mediante lista dei figli
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef char TipoInfo;
 struct NodoSCL;
@@ -17,13 +18,13 @@ typedef struct{
 typedef NodoAlbero* Albero;
 
 int grado(Albero);
-NodoAlbero* aggiungiNodo(NodoAlbero* n);
+Albero aggiungiNodo(Albero);
 
 int numNodi(Albero a);
-NodoAlbero* padre(Albero a, NodoAlbero* n);
-NodoSCL* figli(NodoAlbero* n);
-void aggiungiSottoalbero(Albero a, NodoAlbero* n);
-Albero rimuoviSottoalbero(Albero* a, NodoAlbero* n);
+Albero padre(Albero a, Albero n);
+NodoSCL* figli(Albero n);
+void aggiungiSottoalbero(Albero a, Albero n);
+Albero rimuoviSottoalbero(Albero* a, Albero n);
 
 void stampa(Albero a);
 
@@ -40,3 +41,18 @@ int grado(Albero n){
     }
     return g;
 }
+
+Albero aggiungiNodo(Albero n){ //E' piu' un allocazione Nodo.
+    if (n == NULL) {
+        return NULL;
+    }
+
+    NodoAlbero* nuovo = malloc(sizeof(NodoAlbero));
+    nuovo->figli = NULL;
+    NodoSCL* nodoSCL = malloc(sizeof(NodoSCL));
+    nodoSCL->figlio = nuovo;
+    nodoSCL->next = n->figli;
+
+    return nuovo;
+};
+
