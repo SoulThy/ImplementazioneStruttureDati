@@ -18,7 +18,7 @@ typedef struct{
 typedef NodoAlbero* Albero;
 
 int grado(Albero);
-Albero aggiungiNodo(Albero);
+Albero aggiungiNodo(Albero*);
 
 int numNodi(Albero a);
 Albero padre(Albero a, Albero n);
@@ -26,15 +26,45 @@ NodoSCL* figli(Albero n);
 void aggiungiSottoalbero(Albero a, Albero n);
 Albero rimuoviSottoalbero(Albero* a, Albero n);
 
-void stampa(Albero a);
+void stampa(Albero);
 
 int main(){
+    NodoAlbero *nuovoNodo = NULL;
+    NodoAlbero *nuovoNodo2 = NULL;
     Albero a = NULL;
-};
 
-int grado(Albero n){
+    //( [a] ( [c] )( [b] ( [e] )( [d] )))
+    nuovoNodo = aggiungiNodo(&a);
+    nuovoNodo->info = 'a';
+    nuovoNodo2 = aggiungiNodo(&a);
+    nuovoNodo2->info = 'b';
+    nuovoNodo = aggiungiNodo(&a);
+    nuovoNodo->info = 'c';
+    nuovoNodo = aggiungiNodo(&nuovoNodo2);
+    nuovoNodo->info = 'd';
+    nuovoNodo = aggiungiNodo(&nuovoNodo2);
+    nuovoNodo->info = 'e';
+
+    stampa(a);
+}
+
+void stampa(Albero a){
+    if (a == NULL) {
+        printf("()");
+        return;
+    }
+    printf("( [%c] ", a->info);
+    NodoSCL* aux = (NodoSCL *) a->figli;
+    while (aux != NULL) {
+        stampa(aux->figlio);
+        aux = (NodoSCL *) aux->next;
+    }
+    printf(")");
+}
+
+int grado(Albero a){
     int g = 0;
-    NodoSCL* aux = (NodoSCL *) n->figli;
+    NodoSCL* aux = (NodoSCL *) a->figli;
     while (aux != NULL){ //Scansiona tutti i figli
         g += 1; // aggiunge 1 a g per ogni figlio del nodo n
         aux = (NodoSCL *) aux->next;
@@ -42,17 +72,21 @@ int grado(Albero n){
     return g;
 }
 
-Albero aggiungiNodo(Albero n){ //E' piu' un allocazione Nodo.
-    if (n == NULL) {
-        return NULL;
-    }
-
+Albero aggiungiNodo(Albero* a) {
     NodoAlbero* nuovo = malloc(sizeof(NodoAlbero));
     nuovo->figli = NULL;
-    NodoSCL* nodoSCL = malloc(sizeof(NodoSCL));
-    nodoSCL->figlio = nuovo;
-    nodoSCL->next = n->figli;
+
+    if (*a == NULL) {
+        // Se l'a è vuoto, il nuovo nodo diventa l'a stesso
+        *a = nuovo;
+    } else {
+        NodoSCL* nodoSCL = malloc(sizeof(NodoSCL));
+        nodoSCL->figlio = nuovo;
+        nodoSCL->next = (*a)->figli;
+        (*a)->figli = (struct NodoSCL*)nodoSCL;
+    }
 
     return nuovo;
-};
+}
+
 
