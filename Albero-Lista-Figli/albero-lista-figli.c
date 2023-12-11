@@ -22,8 +22,8 @@ Albero aggiungiNodo(Albero*);
 int numNodi(Albero a);
 Albero padre(Albero a, Albero n);
 NodoSCL* figli(Albero n);
-
 void aggiungiSottoalbero(Albero a, Albero n);
+
 Albero rimuoviSottoalbero(Albero* a, Albero n);
 
 void stampa(Albero);
@@ -129,4 +129,14 @@ Albero padre(Albero a, Albero n){
 
 NodoSCL* figli(Albero n){
     return (NodoSCL *) n->figli;
+}
+
+void aggiungiSottoalbero(Albero a, Albero n){
+    if(a == NULL || n == NULL){
+        return;
+    }
+    NodoSCL* nodoSCL = (NodoSCL*) malloc(sizeof(NodoSCL));
+    nodoSCL->figlio = a;
+    nodoSCL->next = n->figli;
+    n->figli = (struct NodoSCL *) nodoSCL;
 }
