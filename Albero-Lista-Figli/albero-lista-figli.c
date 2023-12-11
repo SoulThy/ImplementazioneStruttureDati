@@ -20,9 +20,9 @@ typedef NodoAlbero* Albero;
 int grado(Albero);
 Albero aggiungiNodo(Albero*);
 int numNodi(Albero a);
-
 Albero padre(Albero a, Albero n);
 NodoSCL* figli(Albero n);
+
 void aggiungiSottoalbero(Albero a, Albero n);
 Albero rimuoviSottoalbero(Albero* a, Albero n);
 
@@ -125,4 +125,8 @@ Albero padre(Albero a, Albero n){
         aux = (NodoSCL *) aux->next;
     }
     return NULL;
+}
+
+NodoSCL* figli(Albero n){
+    return (NodoSCL *) n->figli;
 }
