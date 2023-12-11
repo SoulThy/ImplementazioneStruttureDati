@@ -46,7 +46,7 @@ int main(){
     nuovoNodo = aggiungiNodo(&nuovoNodo2);
     nuovoNodo->info = 'e';
 
-    rimuoviSottoalbero(&a,nuovoNodo);
+    //rimuoviSottoalbero(&a,nuovoNodo);
 
     stampa(a);
 
