@@ -59,20 +59,20 @@ void stampa(Albero a){
         return;
     }
     printf("( [%c] ", a->info);
-    NodoSCL* aux = (NodoSCL *) a->figli;
+    NodoSCL* aux = a->figli;
     while (aux != NULL) {
         stampa(aux->figlio);
-        aux = (NodoSCL *) aux->next;
+        aux = aux->next;
     }
     printf(")");
 }
 
 int grado(Albero a){
     int g = 0;
-    NodoSCL* aux = (NodoSCL *) a->figli;
+    NodoSCL* aux = a->figli;
     while (aux != NULL){ //Scansiona tutti i figli
         g += 1; // aggiunge 1 a g per ogni figlio del nodo n
-        aux = (NodoSCL *) aux->next;
+        aux = aux->next;
     }
     return g;
 }
@@ -88,7 +88,7 @@ Albero aggiungiNodo(Albero* a) {
         NodoSCL* nodoSCL = malloc(sizeof(NodoSCL));
         nodoSCL->figlio = nuovo;
         nodoSCL->next = (*a)->figli;
-        (*a)->figli = (struct NodoSCL*)nodoSCL;
+        (*a)->figli = nodoSCL;
     }
 
     return nuovo;
@@ -100,11 +100,11 @@ int numNodi(Albero a){
     }
 
     int n = 1; // contiamo la radice
-    NodoSCL *aux = (NodoSCL *) a->figli;
+    NodoSCL *aux = a->figli;
 
     while(aux != NULL){
         n += numNodi(aux->figlio);
-        aux = (NodoSCL *) aux->next;
+        aux = aux->next;
     }
 
     return n;
@@ -115,7 +115,7 @@ Albero padre(Albero a, Albero n){
         return NULL;
     }
 
-    NodoSCL *aux = (NodoSCL *) a->figli;
+    NodoSCL *aux = a->figli;
     while(aux != NULL){
         if (aux->figlio == n)
             return a;
@@ -123,23 +123,23 @@ Albero padre(Albero a, Albero n){
         if (p != NULL) {
             return p;
         }
-        aux = (NodoSCL *) aux->next;
+        aux = aux->next;
     }
     return NULL;
 }
 
 NodoSCL* figli(Albero n){
-    return (NodoSCL *) n->figli;
+    return n->figli;
 }
 
 void aggiungiSottoalbero(Albero a, Albero n){
     if(a == NULL || n == NULL){
         return;
     }
-    NodoSCL* nodoSCL = (NodoSCL*) malloc(sizeof(NodoSCL));
+    NodoSCL* nodoSCL = malloc(sizeof(NodoSCL));
     nodoSCL->figlio = a;
     nodoSCL->next = n->figli;
-    n->figli = (struct NodoSCL *) nodoSCL;
+    n->figli = nodoSCL;
 }
 
 Albero rimuoviSottoalbero(Albero* a, Albero n){ /*questa funzione restituisce l'albero rimosso*/
