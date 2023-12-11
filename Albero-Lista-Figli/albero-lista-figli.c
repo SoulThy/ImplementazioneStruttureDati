@@ -19,8 +19,8 @@ typedef NodoAlbero* Albero;
 
 int grado(Albero);
 Albero aggiungiNodo(Albero*);
-
 int numNodi(Albero a);
+
 Albero padre(Albero a, Albero n);
 NodoSCL* figli(Albero n);
 void aggiungiSottoalbero(Albero a, Albero n);
@@ -46,6 +46,10 @@ int main(){
     nuovoNodo->info = 'e';
 
     stampa(a);
+
+    printf("\nIl numero totale di nodi e': %d", numNodi(a));
+
+    printf("\nIl padre di [%c] e' [%c]", nuovoNodo->info, padre(a,nuovoNodo)->info);
 }
 
 void stampa(Albero a){
@@ -89,4 +93,36 @@ Albero aggiungiNodo(Albero* a) {
     return nuovo;
 }
 
+int numNodi(Albero a){
+    if (a == NULL) {
+        return 0;
+    }
 
+    int n = 1; // contiamo la radice
+    NodoSCL *aux = (NodoSCL *) a->figli;
+
+    while(aux != NULL){
+        n += numNodi(aux->figlio);
+        aux = (NodoSCL *) aux->next;
+    }
+
+    return n;
+}
+
+Albero padre(Albero a, Albero n){
+    if (a == NULL || n == NULL || n == a) {
+        return NULL;
+    }
+
+    NodoSCL *aux = (NodoSCL *) a->figli;
+    while(aux != NULL){
+        if (aux->figlio == n)
+            return a;
+        Albero p = padre(aux->figlio, n);
+        if (p != NULL) {
+            return p;
+        }
+        aux = (NodoSCL *) aux->next;
+    }
+    return NULL;
+}
