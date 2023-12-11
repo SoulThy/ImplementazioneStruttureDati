@@ -46,6 +46,8 @@ int main(){
     nuovoNodo = aggiungiNodo(&nuovoNodo2);
     nuovoNodo->info = 'e';
 
+    rimuoviSottoalbero(&a,nuovoNodo);
+
     stampa(a);
 
     printf("\nIl numero totale di nodi e': %d", numNodi(a));
@@ -151,21 +153,24 @@ Albero rimuoviSottoalbero(Albero* a, Albero n){ /*questa funzione restituisce l'
         *a = NULL;
         return n;
     }
-    NodoSCL *pGen = malloc(sizeof(NodoSCL));
-    pGen->next = p->figli;
-
-    NodoSCL* aux = pGen;
-    while(aux->next != NULL){
-        if(aux->next->figlio == n){
-            NodoSCL* aux2 = aux->next;
-            aux->next = aux->next->next;
+    NodoSCL* aux = p -> figli;
+    if (aux -> figlio == n){ // n e' il primo figlio di p
+        // Eliminazione dell'elemento in testa
+        p -> figli = p -> figli -> next;
+        free(aux);
+        return n;
+    }
+    // Scansiona i figli di p fino a trovare il predecessore di n
+    while(aux -> next != NULL){
+        if (aux -> next -> figlio == n){// aux punta al predecessore di n
+            // elimina il nodo n dai figli di p
+            NodoSCL* aux2 = aux -> next;
+            aux -> next = aux -> next -> next;
             free(aux2);
-            free(pGen);
             return n;
         }
         aux = aux -> next;
     }
-
      return NULL;
 }
 
