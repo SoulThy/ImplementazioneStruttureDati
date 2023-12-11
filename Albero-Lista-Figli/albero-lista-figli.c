@@ -10,11 +10,12 @@ typedef struct{
     struct NodoSCL *figli;
 } NodoAlbero;
 
-typedef struct{
+struct NodoSCL{
     NodoAlbero* figlio;
     struct NodoSCL* next;
-} NodoSCL;
+};
 
+typedef struct NodoSCL NodoSCL;
 typedef NodoAlbero* Albero;
 
 int grado(Albero);
@@ -23,8 +24,8 @@ int numNodi(Albero a);
 Albero padre(Albero a, Albero n);
 NodoSCL* figli(Albero n);
 void aggiungiSottoalbero(Albero a, Albero n);
-
 Albero rimuoviSottoalbero(Albero* a, Albero n);
+
 
 void stampa(Albero);
 
@@ -140,3 +141,31 @@ void aggiungiSottoalbero(Albero a, Albero n){
     nodoSCL->next = n->figli;
     n->figli = (struct NodoSCL *) nodoSCL;
 }
+
+Albero rimuoviSottoalbero(Albero* a, Albero n){ /*questa funzione restituisce l'albero rimosso*/
+    if(a == NULL || n == NULL)
+        return NULL;
+
+    Albero p = padre(*a, n);
+    if (p == NULL){ /*scollegamento della radice*/
+        *a = NULL;
+        return n;
+    }
+    NodoSCL *pGen = malloc(sizeof(NodoSCL));
+    pGen->next = p->figli;
+
+    NodoSCL* aux = pGen;
+    while(aux->next != NULL){
+        if(aux->next->figlio == n){
+            NodoSCL* aux2 = aux->next;
+            aux->next = aux->next->next;
+            free(aux2);
+            free(pGen);
+            return n;
+        }
+        aux = aux -> next;
+    }
+
+     return NULL;
+}
+
